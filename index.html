@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+<head>
+<script>
+    (function () {
+        var script = document.createElement('script');
+        script.src = 'https://unpkg.com/web-vitals@3/dist/web-vitals.iife.js';
+        script.onload = function () {
+            // When loading `web-vitals` using a classic script, all the public
+            // methods can be found on the `webVitals` global namespace.
+            webVitals.onCLS(post);
+            webVitals.onFID(post);
+            webVitals.onLCP(post);
+        };
+        document.head.appendChild(script);
+    })();
+    function post(metrics) {
+        metrics["hostname"] = window.location.hostname;
+        metrics["pathname"] = window.location.pathname;
+        fetch("https://example.com/api/v1/web-vitals", {
+            method: "POST",
+            headers: {'Content-Type': 'application/json'},
+            body: JSON.stringify(metrics)
+        });
+    }
+</script>
+</head>
+<body>
+
+<h1>Hello World</h1>
+<p>This is our test website.</p>
+
+</body>
+</html>
